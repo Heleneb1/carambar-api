@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Carambar Joke API",
+    "version": "1.0.0",
+    "description": "API to get and add jokes for Carambar & co."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "paths": {
+    "/jokes": {
+      "get": {
+        "summary": "Get all jokes",
+        "tags": ["Jokes"],
+        "responses": {
+          "200": {
+            "description": "List of jokes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Joke"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/joke/{id}": {
+      "get": {
+        "summary": "Get a joke by ID",
+        "tags": ["Jokes"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Joke details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Joke"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Joke not found"
+          }
+        }
+      }
+    },
+    "/addJokes": {
+      "post": {
+        "summary": "Add a new joke",
+        "tags": ["Jokes"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Joke"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Joke created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Joke"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/deleteJoke/{id}": {
+      "delete": {
+        "summary": "Delete a joke by ID",
+        "tags": ["Jokes"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Joke deleted successfully"
+          },
+          "404": {
+            "description": "Joke not found"
+          }
+        }
+      }
+    },
+    "/random": {
+      "get": {
+        "summary": "Get a random joke",
+        "tags": ["Jokes"],
+        "responses": {
+          "200": {
+            "description": "Random joke",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Joke"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Joke": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": ["question", "answer"]
+      }
+    }
+  }
+}
