@@ -32,8 +32,13 @@ API REST pour gérer les blagues Carambar — réalisée avec **Node.js**, **Exp
 
 ## 🧪 Tests
 
-Tu peux tester avec **Postman** ou via Swagger :  
+Tu peux tester avec **Postman** o :  
 👉 [http://localhost:2525/api-docs](http://localhost:2525/api-docs)
+
+## Démo en ligne
+
+- Documentation Swagger : [https://carambar-api-khpl.onrender.com/api-docs](https://carambar-api-khpl.onrender.com/api-docs)
+- Endpoint GET des blagues : [https://carambar-api-khpl.onrender.com/api/v1/jokes](https://carambar-api-khpl.onrender.com/api/v1/jokes)
 
 ## ⚙️ Installation
 

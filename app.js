@@ -26,7 +26,7 @@ const swaggerOptions = {
 
             {
 
-                url: `http://localhost:${port}/api/v1`
+                url: `https://carambar-api-khpl.onrender.com/api/v1/`
             }
         ]
     },
@@ -40,6 +40,7 @@ app.use(cors());
 app.use("/api/v1", jokeRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+
 // Synch db and start server
 (async () => {
     try {
@@ -52,4 +53,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     } catch (err) {
         console.error("❌ Erreur lors de la synchronisation :", err);
     }
-})();
+
+})();;
