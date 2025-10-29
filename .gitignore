@@ -1,5 +1,18 @@
+# Dépendances
 node_modules/
+
+# Environnements
 .env
 .env.local
+.env.development
+.env.production
+.env.*.local
+
+# Base de données locale
 database.sqlite
+
+# Fichiers système
 .DS_Store
+
+# Fichiers de test locaux
+testco.js
