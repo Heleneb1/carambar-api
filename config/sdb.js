@@ -5,23 +5,24 @@ dotenv.config();
 
 let sequelize;
 
+// ✅ Production sur Render → SQLite
 if (process.env.NODE_ENV === "production") {
-    // PostgreSQL pour Render
-    sequelize = new Sequelize(process.env.DATABASE_URL_EXT, {
-        dialect: "postgres",
-        dialectOptions: {
-            ssl: { require: true, rejectUnauthorized: false },
-        },
+    sequelize = new Sequelize({
+        dialect: "sqlite",
+        storage: path.join(process.cwd(), "carambar.sqlite"),
+        logging: false,
     });
+
+    // ✅ Mode SQLite local
 } else if (process.env.NODE_ENV === "sqlite") {
-    // SQLite en local
     sequelize = new Sequelize({
         dialect: "sqlite",
         storage: path.join(__dirname, "database.sqlite"),
         logging: false,
     });
+
+    // ✅ Mode MySQL local
 } else {
-    // MySQL en local
     sequelize = new Sequelize(
         process.env.DB_NAME,
         process.env.DB_USER,
@@ -30,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
             host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             dialect: "mysql",
-            logging: console.log, // pour voir les requêtes SQL
+            logging: console.log,
         }
     );
 }
