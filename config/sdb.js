@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === "production") {
         logging: false,
     });
 
+
     // ✅ Mode SQLite local
 } else if (process.env.NODE_ENV === "sqlite") {
     sequelize = new Sequelize({
