@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllJokes, getJokeById, addOneJoke, getRandomJoke, deleteJoke } = require("../controllers/jokeController");
+const { getAllJokes, getJokeById, addOneJoke, getRandomJoke, deleteJoke, updateJoke } = require("../controllers/jokeController");
 
 /**
  * @swagger
@@ -96,6 +96,30 @@ router.post('/jokes', addOneJoke);
  * 
  */
 router.get('/joke/:id', getJokeById);
+
+/**
+ * @swagger
+ * /update-joke/{id}:
+ *   get:
+ *     summary: Get a joke by ID
+ *     tags: [Jokes]
+ *     parameters:
+ *       - in: body
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The joke ID
+ *     responses:
+ *       200:
+ *         description: Joke details
+ *       404:
+ *         description: Joke not found
+ *       500:
+ *         description: Server error
+ * 
+ */
+router.put('/update-joke/:id', updateJoke);
 
 /**
  * @swagger

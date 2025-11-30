@@ -32,7 +32,7 @@ API REST pour gérer les blagues Carambar — réalisée avec **Node.js**, **Exp
 
 ## 🧪 Tests
 
-Tu peux tester avec **Postman** o :  
+Tu peux tester avec **Postman** :  
 👉 [http://localhost:2525/api-docs](http://localhost:2525/api-docs)
 
 ## Démo en ligne

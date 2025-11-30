@@ -20,6 +20,10 @@ const Joke = sequelize.define("Joke", {
         type: DataTypes.STRING,
         allowNull: false
     },
+    published: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

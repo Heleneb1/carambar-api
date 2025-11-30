@@ -5,16 +5,24 @@ const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const dotenv = require("dotenv");
-dotenv.config();
+const { CustomError, errorMiddleware } = require("@heleneb1/ts-errors");
 
+dotenv.config();
 const port = process.env.PORT || 3000;
 const jokeRoutes = require("./routes/jokeRoutes");
 
+app.use(express.json());
+app.use(cors());
+
+// Routes
 app.get("/", (req, res) => {
     res.send("Bienvenue sur l'API Carambar 😋");
 });
-// Configuration Swagger
-const swaggerOptions = {
+app.get("/test-error", (req, res, next) => {
+    next(CustomError("Route de test d'erreur", { route: "/test-error" }));
+});
+app.use("/api/v1", jokeRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc({
     definition: {
         openapi: '3.0.0',
         info: {
@@ -23,28 +31,20 @@ const swaggerOptions = {
             description: 'API to get and add jokes for Carambar & co.'
         },
         servers: [
-
-            {
-
-                url: `https://carambar-api-khpl.onrender.com/api/v1/`
-            }
+            { url: `https://carambar-api-khpl.onrender.com/api/v1/` },
+            { url: `http://localhost:${port}/api/v1` }
         ]
     },
     apis: ['./routes/*.js']
-};
+})));
 
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
+// Middleware d’erreur de ta lib (en dernier)
+app.use(errorMiddleware);
 
-app.use(express.json());
-app.use(cors());
-app.use("/api/v1", jokeRoutes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-// Synch db and start server
+// Sync db et start server
 (async () => {
     try {
-        await sequelize.sync({ force: false }); // force: true = drop & recreate tables
+        await sequelize.sync({ force: false });
         console.log("✅ Table Joke synchronisée");
         app.listen(port, () => {
             console.log(`🚀 Serveur démarré sur http://localhost:${port}`);
@@ -53,5 +53,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     } catch (err) {
         console.error("❌ Erreur lors de la synchronisation :", err);
     }
-
-})();;
+})();
